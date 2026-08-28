@@ -1,0 +1,1966 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coffre à outil Nabek</title>
+<meta name="description" content="Coffre à outil Nabek — Greffons site web Projet Nabek. Outils et ressources personnelles.">
+<meta name="keywords" content="Nabek, ferme régénérative, regenerative farm, Québec, Quebec, chanvre, hemp, bœuf, beef, Wampum, mycélium, mycelium, sans subventions, without subsidies">
+<meta property="og:title" content="Coffre à outil Nabek — Greffons site web Projet Nabek">
+<meta property="og:description" content="Coffre à outil Nabek — Greffons site web Projet Nabek">
+<meta property="og:url" content="https://NabekKebek.github.io">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root {
+  --text-primary: #1a1a1a;
+  --text-secondary: #555;
+  --text-tertiary: #888;
+  --text-quaternary: #aaa;
+  --surface: #f5f5f5;
+  --surface-muted: #f0f0f0;
+  --border: #e0e0e0;
+  --accent: #2d6a4f;
+  --accent-light: #d8f3dc;
+  --accent-hover: #1b4332;
+  --bg: #ffffff;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+body.dark {
+  --text-primary: #e8e8e8;
+  --text-secondary: #b0b0b0;
+  --text-tertiary: #808080;
+  --text-quaternary: #606060;
+  --surface: #2a2a2a;
+  --surface-muted: #252525;
+  --border: #3a3a3a;
+  --accent: #52b788;
+  --accent-light: #1b4332;
+  --accent-hover: #74c69d;
+  --bg: #1a1a1a;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+.container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
+
+/* Language system */
+body.lang-fr .en-content { display: none !important; }
+body.lang-en .fr-content { display: none !important; }
+
+/* Language popup */
+.lang-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.88);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(6px);
+}
+.lang-popup {
+  background: var(--bg);
+  padding: 48px 36px;
+  border-radius: 16px;
+  text-align: center;
+  max-width: 440px;
+  width: 92%;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.4);
+  border: 1px solid var(--border);
+}
+.lang-popup-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: var(--accent-light);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+.lang-popup-icon svg { width: 32px; height: 32px; fill: currentColor; }
+.lang-popup h2 {
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+  letter-spacing: 0.01em;
+}
+.lang-popup p {
+  color: var(--text-secondary);
+  margin-bottom: 28px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.lang-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+.lang-btn {
+  padding: 14px 32px;
+  border-radius: 10px;
+  border: 2px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+.lang-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(45,106,79,0.35);
+}
+.lang-btn-outline {
+  background: transparent;
+  color: var(--accent);
+}
+.lang-btn-outline:hover {
+  background: var(--accent-light);
+}
+
+/* Navigation */
+.nav-bar {
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  z-index: 100;
+  padding: 12px 0;
+}
+.nav-tabs {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: inherit;
+  transition: all 0.15s ease-out;
+}
+.tab-btn:hover {
+  color: var(--text-primary);
+  background: var(--surface-muted);
+}
+.tab-btn.active {
+  color: var(--accent);
+  font-weight: 500;
+  background: var(--accent-light);
+}
+.tab-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+/* Content */
+.tab-content { padding: 24px 0 40px; }
+.tab-panel { display: none; animation: fadeIn 0.25s ease-out; }
+.tab-panel.active { display: block; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Hero */
+.hero { text-align: center; padding: 32px 0 20px; }
+.hero h1 {
+  font-size: 36px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+}
+.hero p {
+  font-size: 16px;
+  color: var(--text-secondary);
+}
+.hero-accent {
+  display: inline-block;
+  width: 48px;
+  height: 3px;
+  background: var(--accent);
+  border-radius: 2px;
+  margin: 12px auto;
+}
+
+/* Sections */
+.section-title {
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+.section-subtitle {
+  font-size: 15px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+/* Cards */
+.card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+  margin-bottom: 14px;
+  background: var(--surface);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+.card-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+.card-text {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+.card-text ul {
+  list-style: none;
+  padding-left: 0;
+}
+.card-text ul li {
+  padding: 4px 0;
+  padding-left: 18px;
+  position: relative;
+}
+.card-text ul li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: bold;
+}
+.meta {
+  font-size: 12px;
+  color: var(--text-quaternary);
+  margin-top: 10px;
+}
+
+/* Tags */
+.tag-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+.tag {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  background: var(--accent-light);
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* Links */
+.link-section { margin-top: 8px; }
+.link-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 14px;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+.link-row:last-child { border-bottom: none; }
+.link-row:hover { color: var(--accent); }
+.link-row svg { width: 18px; height: 18px; fill: currentColor; flex-shrink: 0; }
+.link-row span { flex: 1; }
+.link-desc {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+
+/* Contact Form */
+.contact-form { margin-top: 8px; }
+.form-group { margin-bottom: 16px; }
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 14px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-light);
+}
+.form-group textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+.btn-submit {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #fff;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.btn-submit:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+.btn-submit:active { transform: translateY(0); }
+.contact-alt {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.contact-alt-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+.contact-alt-text {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+.contact-alt-text a {
+  color: var(--accent);
+  text-decoration: none;
+}
+.contact-alt-text a:hover { text-decoration: underline; }
+
+/* Galerie */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+.gallery-item {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.gallery-item:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.gallery-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-quaternary);
+  font-size: 13px;
+  text-align: center;
+  padding: 12px;
+}
+.gallery-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 8px 12px;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.gallery-item:hover .gallery-caption { opacity: 1; }
+@media (max-width: 480px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+}
+
+/* Social Icons */
+.social-bar {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--surface-muted);
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+.social-link:hover {
+  background: var(--accent-light);
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+.social-link svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+/* Ressources */
+.resource-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+  margin-bottom: 14px;
+  background: var(--surface);
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.resource-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+.resource-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--accent-light);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.resource-icon svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+}
+.resource-content {
+  flex: 1;
+  min-width: 0;
+}
+.resource-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+.resource-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+.resource-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--text-quaternary);
+}
+.resource-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  transition: background 0.15s ease;
+  margin-top: 8px;
+}
+.resource-btn:hover { background: var(--accent-hover); }
+.resource-btn svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+.resource-btn-disabled {
+  background: var(--surface-muted);
+  color: var(--text-quaternary);
+  cursor: not-allowed;
+}
+
+/* Search Bar */
+.search-bar {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+.search-wrapper {
+  position: relative;
+  max-width: 420px;
+  margin: 0 auto;
+}
+.search-wrapper svg {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: var(--text-quaternary);
+  fill: currentColor;
+  pointer-events: none;
+}
+.search-input {
+  width: 100%;
+  padding: 10px 14px 10px 40px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 14px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-light);
+}
+.search-input::placeholder { color: var(--text-quaternary); }
+.no-results {
+  text-align: center;
+  padding: 32px 20px;
+  color: var(--text-tertiary);
+  font-size: 14px;
+  display: none;
+}
+
+/* Dashboard / Tableaux */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  font-size: 13px;
+}
+.data-table th,
+.data-table td {
+  padding: 8px 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.data-table th {
+  font-weight: 600;
+  color: var(--text-primary);
+  background: var(--surface-muted);
+}
+.data-table td { color: var(--text-secondary); }
+.data-table tr:hover td { background: var(--surface-muted); }
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.kpi-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  background: var(--surface);
+  text-align: center;
+}
+.kpi-value {
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--accent);
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+.kpi-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 6px;
+}
+.kpi-unit {
+  font-size: 14px;
+  color: var(--text-tertiary);
+}
+
+/* Temoignages */
+.testimonial-grid {
+  display: grid;
+  gap: 14px;
+  margin-top: 8px;
+}
+.testimonial-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+  background: var(--surface);
+}
+.testimonial-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.testimonial-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--accent-light);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+.testimonial-name {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+.testimonial-date {
+  font-size: 12px;
+  color: var(--text-quaternary);
+}
+.testimonial-text {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  font-style: italic;
+}
+.testimonial-form { margin-top: 8px; }
+
+/* Calendrier */
+.event-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 8px;
+}
+.event-item {
+  display: flex;
+  gap: 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  background: var(--surface);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.event-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+.event-item.past { opacity: 0.7; }
+.event-date-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  background: var(--accent-light);
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.event-date-day {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1;
+}
+.event-date-month {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+.event-content {
+  flex: 1;
+  min-width: 0;
+}
+.event-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+.event-meta {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-bottom: 6px;
+}
+.event-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+.event-status {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  margin-left: 8px;
+}
+.event-status.upcoming {
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+  color: var(--accent);
+}
+.event-status.past {
+  background: var(--surface-muted);
+  color: var(--text-quaternary);
+}
+
+/* Carte */
+.map-wrapper {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--surface);
+  margin-bottom: 14px;
+}
+.map-wrapper iframe {
+  width: 100%;
+  height: 400px;
+  border: none;
+  display: block;
+}
+.map-placeholder {
+  width: 100%;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-muted);
+  color: var(--text-quaternary);
+  text-align: center;
+  padding: 24px;
+}
+.map-placeholder svg {
+  width: 48px;
+  height: 48px;
+  fill: currentColor;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+.map-placeholder-text {
+  font-size: 14px;
+  color: var(--text-secondary);
+  max-width: 400px;
+  line-height: 1.6;
+}
+.map-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 8px;
+}
+.map-info-item {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+  background: var(--surface);
+}
+.map-info-label {
+  font-size: 12px;
+  color: var(--text-quaternary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 4px;
+}
+.map-info-value {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+/* Newsletter */
+.newsletter-hero {
+  text-align: center;
+  padding: 24px 0 16px;
+}
+.newsletter-hero-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: var(--accent-light);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 14px;
+}
+.newsletter-hero-icon svg {
+  width: 28px;
+  height: 28px;
+  fill: currentColor;
+}
+.newsletter-hero h2 {
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+.newsletter-hero p {
+  font-size: 15px;
+  color: var(--text-secondary);
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+.newsletter-form-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  background: var(--surface);
+  max-width: 480px;
+  margin: 0 auto;
+}
+.newsletter-benefits {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 8px;
+}
+.newsletter-benefit {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  background: var(--surface);
+  text-align: center;
+}
+.newsletter-benefit-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--accent-light);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 10px;
+}
+.newsletter-benefit-icon svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+.newsletter-benefit-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+.newsletter-benefit-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Theme Toggle + Lang Toggle */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 8px;
+}
+.theme-toggle, .lang-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+}
+.theme-toggle:hover, .lang-toggle:hover {
+  background: var(--surface-muted);
+  color: var(--text-primary);
+}
+.theme-toggle svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.card, .event-item, .testimonial-card, .resource-card, .gallery-item, .kpi-card, .map-info-item, .newsletter-benefit, .link-row {
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+/* Sous-onglets (Personnel) */
+.sub-nav-tabs {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.sub-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: inherit;
+  transition: all 0.15s ease-out;
+}
+.sub-tab-btn:hover {
+  color: var(--text-primary);
+  background: var(--surface-muted);
+}
+.sub-tab-btn.active {
+  color: var(--accent);
+  font-weight: 500;
+  background: var(--accent-light);
+}
+.sub-tab-panel {
+  display: none;
+  animation: fadeIn 0.25s ease-out;
+}
+.sub-tab-panel.active {
+  display: block;
+}
+.tome-grid {
+  display: grid;
+  gap: 14px;
+  margin-top: 12px;
+}
+.tome-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+  background: var(--surface);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.tome-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+.tome-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+.tome-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.tome-lang-label {
+  font-size: 12px;
+  color: var(--text-quaternary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin: 16px 0 8px;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 24px 0 16px;
+  font-size: 12px;
+  color: var(--text-quaternary);
+  border-top: 1px solid var(--border);
+  margin-top: 8px;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .hero h1 { font-size: 28px; }
+  .nav-tabs { gap: 2px; }
+  .tab-btn { padding: 6px 10px; font-size: 13px; }
+  .tab-btn svg { width: 16px; height: 16px; }
+  .card { padding: 14px; }
+  .lang-popup { padding: 36px 24px; }
+  .lang-popup h2 { font-size: 22px; }
+}
+</style>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIwIiBmaWxsPSIjMmQ2YTRmIi8+PHRleHQgeD0iNTAiIHk9IjcwIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLC1hcHBsZS1zeXN0ZW0sc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1OCIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+TjwvdGV4dD48L3N2Zz4=">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WCYLV4WNW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WCYLV4WNW');
+</script>
+</head>
+<body class="lang-fr">
+
+<!-- POPUP CHOIX LANGUE -->
+<div class="lang-overlay" id="langOverlay">
+  <div class="lang-popup">
+    <div class="lang-popup-icon">
+      <svg viewBox="0 0 24 24"><path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
+    </div>
+    <h2></h2>
+    <p></p>
+    <div class="lang-buttons">
+      <button class="lang-btn" onclick="setLanguage('fr')">🇫🇷 Français</button>
+      <button class="lang-btn lang-btn-outline" onclick="setLanguage('en')">🇬🇧 English</button>
+    </div>
+  </div>
+</div>
+
+<nav class="nav-bar">
+  <div class="container">
+    <div class="nav-tabs">
+      <button class="tab-btn active" data-tab="accueil" onclick="showTab('accueil')"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></button>
+      <button class="tab-btn" data-tab="presentation" onclick="showTab('presentation')"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></button>
+      <button class="tab-btn" data-tab="ferme" onclick="showTab('ferme')"><svg viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg></button>
+      <button class="tab-btn" data-tab="carte" onclick="showTab('carte')"><svg viewBox="0 0 24 24"><path d="M20.5 3l-6 1.5-6-1.5-5.5 1.5v15l5.5-1.5 6 1.5 6-1.5V3zM15 18.5l-6-1.5V5l6 1.5v12z"/></svg></button>
+      <button class="tab-btn" data-tab="wampum" onclick="showTab('wampum')"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></button>
+      <button class="tab-btn" data-tab="journal" onclick="showTab('journal')"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></button>
+      <button class="tab-btn" data-tab="dashboard" onclick="showTab('dashboard')"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg></button>
+      <button class="tab-btn" data-tab="blog" onclick="showTab('blog')"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></button>
+      <button class="tab-btn" data-tab="liens" onclick="showTab('liens')"><svg viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></button>
+      <button class="tab-btn" data-tab="projets" onclick="showTab('projets')"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></button>
+      <button class="tab-btn" data-tab="galerie" onclick="showTab('galerie')"><svg viewBox="0 0 24 24"><path d="M22 16V4c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2zm-11-4l2.03 2.71L16 11l4 5H8l3-4zM2 6v14c0 1.1.9 2 2 2h14v-2H4V6H2z"/></svg></button>
+      <button class="tab-btn" data-tab="ressources" onclick="showTab('ressources')"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg></button>
+      <button class="tab-btn" data-tab="personnel" onclick="showTab('personnel')"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></button>
+      <button class="tab-btn" data-tab="contact" onclick="showTab('contact')"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></button>
+      <button class="tab-btn" data-tab="newsletter" onclick="showTab('newsletter')"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></button>
+      <button class="tab-btn" data-tab="temoignages" onclick="showTab('temoignages')"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg></button>
+      <button class="tab-btn" data-tab="calendrier" onclick="showTab('calendrier')"><svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM9 10H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm-8 4H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/></svg></button>
+      <button class="tab-btn" data-tab="coffre" onclick="showTab('coffre')" title="Coffre">
+        <svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.11-.31.18-.65.18-1 0-1.66-1.34-3-3-3-1.05 0-1.96.54-2.5 1.35l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm11 15H4v-2h16v2zm0-5H4V8h5.08L7 10.83 8.62 12 11 8.76l1-1.36 1 1.36L15.38 12 17 10.83 14.92 8H20v6z"/></svg>
+      </button>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" onclick="toggleTheme()" title="Thème clair/sombre">
+        <svg viewBox="0 0 24 24" class="fr-content"><path d="M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69zM12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z"/></svg>
+        <svg viewBox="0 0 24 24" class="en-content"><path d="M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69zM12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z"/></svg>
+      </button>
+      <button class="lang-toggle" onclick="toggleLanguage()" title="Français / English">FR/EN</button>
+    </div>
+  </div>
+</nav>
+
+<main class="tab-content">
+
+<!-- ACCUEIL -->
+<div class="tab-panel active" id="accueil">
+  <div class="container">
+    <div class="hero">
+      <h1 class="fr-content"></h1>
+      <h1 class="en-content"></h1>
+      <div class="hero-accent"></div>
+      <p class="fr-content"></p>
+      <p class="en-content"></p>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="card-text fr-content"></div>
+      <div class="card-text en-content"></div>
+      <div class="tag-row"></div>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="card-text fr-content"></div>
+      <div class="card-text en-content"></div>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="card-text fr-content"></div>
+      <div class="card-text en-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- PRÉSENTATION -->
+<div class="tab-panel" id="presentation">
+  <div class="container">
+    <div class="hero">
+      <h1 class="fr-content"></h1>
+      <h1 class="en-content"></h1>
+      <div class="hero-accent"></div>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="card-text fr-content"></div>
+      <div class="card-text en-content"></div>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="card-text fr-content"></div>
+      <div class="card-text en-content"></div>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="card-text fr-content"></div>
+      <div class="card-text en-content"></div>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="card-text fr-content"></div>
+      <div class="card-text en-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- FERME -->
+<div class="tab-panel" id="ferme">
+  <div class="container">
+    <div class="hero">
+      <h1 class="fr-content"></h1>
+      <h1 class="en-content"></h1>
+      <div class="hero-accent"></div>
+      <p class="fr-content"></p>
+      <p class="en-content"></p>
+    </div>
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="kpi-value"></div><div class="kpi-label fr-content"></div><div class="kpi-label en-content"></div></div>
+      <div class="kpi-card"><div class="kpi-value"></div><div class="kpi-label fr-content"></div><div class="kpi-label en-content"></div></div>
+      <div class="kpi-card"><div class="kpi-value"></div><div class="kpi-label fr-content"></div><div class="kpi-label en-content"></div></div>
+      <div class="kpi-card"><div class="kpi-value"></div><div class="kpi-label fr-content"></div><div class="kpi-label en-content"></div></div>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="card-text fr-content"></div>
+      <div class="card-text en-content"></div>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="card-text fr-content"></div>
+      <div class="card-text en-content"></div>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="card-text fr-content"></div>
+      <div class="card-text en-content"></div>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="card-text fr-content">
+        <table class="data-table">
+          <tr><th></th><th></th><th></th></tr>
+        </table>
+      </div>
+      <div class="card-text en-content">
+        <table class="data-table">
+          <tr><th></th><th></th><th></th></tr>
+        </table>
+      </div>
+      <div class="meta fr-content"></div>
+      <div class="meta en-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- CARTE -->
+<div class="tab-panel" id="carte">
+  <div class="container">
+    <div class="hero">
+      <h1 class="fr-content"></h1>
+      <h1 class="en-content"></h1>
+      <div class="hero-accent"></div>
+      <p class="fr-content"></p>
+      <p class="en-content"></p>
+    </div>
+    <div class="map-wrapper">
+      <div class="map-placeholder">
+        <svg viewBox="0 0 24 24"><path d="M20.5 3l-6 1.5-6-1.5-5.5 1.5v15l5.5-1.5 6 1.5 6-1.5V3zM15 18.5l-6-1.5V5l6 1.5v12z"/></svg>
+        <div class="map-placeholder-text"></div>
+      </div>
+    </div>
+    <div class="map-info-grid">
+      <div class="map-info-item"><div class="map-info-label fr-content"></div><div class="map-info-label en-content"></div><div class="map-info-value"></div></div>
+      <div class="map-info-item"><div class="map-info-label fr-content"></div><div class="map-info-label en-content"></div><div class="map-info-value fr-content"></div><div class="map-info-value en-content"></div></div>
+      <div class="map-info-item"><div class="map-info-label fr-content"></div><div class="map-info-label en-content"></div><div class="map-info-value"></div></div>
+      <div class="map-info-item"><div class="map-info-label fr-content"></div><div class="map-info-label en-content"></div><div class="map-info-value fr-content"></div><div class="map-info-value en-content"></div></div>
+      <div class="map-info-item"><div class="map-info-label fr-content"></div><div class="map-info-label en-content"></div><div class="map-info-value fr-content"></div><div class="map-info-value en-content"></div></div>
+      <div class="map-info-item"><div class="map-info-label fr-content"></div><div class="map-info-label en-content"></div><div class="map-info-value fr-content"></div><div class="map-info-value en-content"></div></div>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="card-text fr-content"></div>
+      <div class="card-text en-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- WAMPUM -->
+<div class="tab-panel" id="wampum">
+  <div class="container">
+    <div class="hero">
+      <h1></h1>
+      <div class="hero-accent"></div>
+      <p class="fr-content"></p>
+      <p class="en-content"></p>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="card-text fr-content"></div>
+      <div class="card-text en-content"></div>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="card-text fr-content"></div>
+      <div class="card-text en-content"></div>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="card-text fr-content"></div>
+      <div class="card-text en-content"></div>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="card-text fr-content"></div>
+      <div class="card-text en-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- JOURNAL -->
+<div class="tab-panel" id="journal">
+  <div class="container">
+    <div class="hero">
+      <h1 class="fr-content"></h1>
+      <h1 class="en-content"></h1>
+      <div class="hero-accent"></div>
+      <p class="fr-content"></p>
+      <p class="en-content"></p>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="meta"></div>
+      <div class="card-text fr-content"></div>
+      <div class="card-text en-content"></div>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="meta"></div>
+      <div class="card-text fr-content"></div>
+      <div class="card-text en-content"></div>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="meta"></div>
+      <div class="card-text fr-content"></div>
+      <div class="card-text en-content"></div>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="meta"></div>
+      <div class="card-text fr-content"></div>
+      <div class="card-text en-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="tab-panel" id="dashboard">
+  <div class="container">
+    <div class="hero">
+      <h1 class="fr-content"></h1>
+      <h1 class="en-content"></h1>
+      <div class="hero-accent"></div>
+      <p class="fr-content"></p>
+      <p class="en-content"></p>
+    </div>
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="kpi-value"></div><div class="kpi-label fr-content"></div><div class="kpi-label en-content"></div></div>
+      <div class="kpi-card"><div class="kpi-value"></div><div class="kpi-label fr-content"></div><div class="kpi-label en-content"></div></div>
+      <div class="kpi-card"><div class="kpi-value"></div><div class="kpi-label fr-content"></div><div class="kpi-label en-content"></div></div>
+      <div class="kpi-card"><div class="kpi-value"></div><div class="kpi-label fr-content"></div><div class="kpi-label en-content"></div></div>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="card-text fr-content"><table class="data-table"><tr><th></th><th></th><th></th></tr></table></div>
+      <div class="card-text en-content"><table class="data-table"><tr><th></th><th></th><th></th></tr></table></div>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="card-text fr-content"><table class="data-table"><tr><th></th><th></th><th></th></tr></table></div>
+      <div class="card-text en-content"><table class="data-table"><tr><th></th><th></th><th></th></tr></table></div>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="card-text fr-content"><table class="data-table"><tr><th></th><th></th><th></th><th></th></tr></table></div>
+      <div class="card-text en-content"><table class="data-table"><tr><th></th><th></th><th></th><th></th></tr></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- BLOG -->
+<div class="tab-panel" id="blog">
+  <div class="container">
+    <div class="hero">
+      <h1 class="fr-content"></h1>
+      <h1 class="en-content"></h1>
+      <div class="hero-accent"></div>
+      <p class="fr-content"></p>
+      <p class="en-content"></p>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="meta"></div>
+      <div class="card-text fr-content"></div>
+      <div class="card-text en-content"></div>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="meta"></div>
+      <div class="card-text fr-content"></div>
+      <div class="card-text en-content"></div>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="meta"></div>
+      <div class="card-text fr-content"></div>
+      <div class="card-text en-content"></div>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="meta"></div>
+      <div class="card-text fr-content"></div>
+      <div class="card-text en-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- LIENS -->
+<div class="tab-panel" id="liens">
+  <div class="container">
+    <div class="hero">
+      <h1 class="fr-content"></h1>
+      <h1 class="en-content"></h1>
+      <div class="hero-accent"></div>
+      <p class="fr-content"></p>
+      <p class="en-content"></p>
+    </div>
+    <div class="search-bar">
+      <div class="search-wrapper">
+        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        <input type="text" class="search-input" id="linkSearch" placeholder="" onkeyup="filterLinks()">
+      </div>
+    </div>
+    <div class="link-section" id="linkList">
+      <a class="link-row" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+        <span><span class="fr-content"></span><span class="en-content"></span><div class="link-desc fr-content"></div><div class="link-desc en-content"></div></span>
+      </a>
+      <a class="link-row" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+        <span><span class="fr-content"></span><span class="en-content"></span><div class="link-desc fr-content"></div><div class="link-desc en-content"></div></span>
+      </a>
+      <a class="link-row" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+        <span><span class="fr-content"></span><span class="en-content"></span><div class="link-desc fr-content"></div><div class="link-desc en-content"></div></span>
+      </a>
+    </div>
+    <div class="no-results" id="noLinks">
+      <span class="fr-content"></span>
+      <span class="en-content"></span>
+    </div>
+  </div>
+</div>
+
+<!-- PROJETS -->
+<div class="tab-panel" id="projets">
+  <div class="container">
+    <div class="hero">
+      <h1 class="fr-content"></h1>
+      <h1 class="en-content"></h1>
+      <div class="hero-accent"></div>
+      <p class="fr-content"></p>
+      <p class="en-content"></p>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="meta fr-content"></div>
+      <div class="meta en-content"></div>
+      <div class="card-text fr-content"></div>
+      <div class="card-text en-content"></div>
+      <div class="tag-row fr-content"></div>
+      <div class="tag-row en-content"></div>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="meta fr-content"></div>
+      <div class="meta en-content"></div>
+      <div class="card-text fr-content"></div>
+      <div class="card-text en-content"></div>
+      <div class="tag-row fr-content"></div>
+      <div class="tag-row en-content"></div>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="meta fr-content"></div>
+      <div class="meta en-content"></div>
+      <div class="card-text fr-content"></div>
+      <div class="card-text en-content"></div>
+      <div class="tag-row fr-content"></div>
+      <div class="tag-row en-content"></div>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="meta fr-content"></div>
+      <div class="meta en-content"></div>
+      <div class="card-text fr-content"></div>
+      <div class="card-text en-content"></div>
+      <div class="tag-row fr-content"></div>
+      <div class="tag-row en-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- GALERIE -->
+<div class="tab-panel" id="galerie">
+  <div class="container">
+    <div class="hero">
+      <h1 class="fr-content"></h1>
+      <h1 class="en-content"></h1>
+      <div class="hero-accent"></div>
+      <p class="fr-content"></p>
+      <p class="en-content"></p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item"><div class="gallery-placeholder"></div><div class="gallery-caption fr-content"></div><div class="gallery-caption en-content"></div></div>
+      <div class="gallery-item"><div class="gallery-placeholder"></div><div class="gallery-caption fr-content"></div><div class="gallery-caption en-content"></div></div>
+      <div class="gallery-item"><div class="gallery-placeholder"></div><div class="gallery-caption fr-content"></div><div class="gallery-caption en-content"></div></div>
+      <div class="gallery-item"><div class="gallery-placeholder"></div><div class="gallery-caption fr-content"></div><div class="gallery-caption en-content"></div></div>
+      <div class="gallery-item"><div class="gallery-placeholder"></div><div class="gallery-caption fr-content"></div><div class="gallery-caption en-content"></div></div>
+      <div class="gallery-item"><div class="gallery-placeholder"></div><div class="gallery-caption fr-content"></div><div class="gallery-caption en-content"></div></div>
+      <div class="gallery-item"><div class="gallery-placeholder"></div><div class="gallery-caption fr-content"></div><div class="gallery-caption en-content"></div></div>
+      <div class="gallery-item"><div class="gallery-placeholder"></div><div class="gallery-caption fr-content"></div><div class="gallery-caption en-content"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- RESSOURCES -->
+<div class="tab-panel" id="ressources">
+  <div class="container">
+    <div class="hero">
+      <h1 class="fr-content"></h1>
+      <h1 class="en-content"></h1>
+      <div class="hero-accent"></div>
+      <p class="fr-content"></p>
+      <p class="en-content"></p>
+    </div>
+    <div class="resource-card">
+      <div class="resource-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg></div>
+      <div class="resource-content">
+        <div class="resource-title fr-content"></div>
+        <div class="resource-title en-content"></div>
+        <div class="resource-desc fr-content"></div>
+        <div class="resource-desc en-content"></div>
+        <div class="resource-meta"></div>
+        <a href="#" class="resource-btn" download><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg><span class="fr-content"></span><span class="en-content"></span></a>
+      </div>
+    </div>
+    <div class="resource-card">
+      <div class="resource-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg></div>
+      <div class="resource-content">
+        <div class="resource-title fr-content"></div>
+        <div class="resource-title en-content"></div>
+        <div class="resource-desc fr-content"></div>
+        <div class="resource-desc en-content"></div>
+        <div class="resource-meta"></div>
+        <a href="#" class="resource-btn" download><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg><span class="fr-content"></span><span class="en-content"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- CONTACT -->
+<div class="tab-panel" id="contact">
+  <div class="container">
+    <div class="hero">
+      <h1 class="fr-content"></h1>
+      <h1 class="en-content"></h1>
+      <div class="hero-accent"></div>
+      <p class="fr-content"></p>
+      <p class="en-content"></p>
+    </div>
+    <div class="social-bar">
+      <a class="social-link" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg></a>
+      <a class="social-link" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+      <a class="social-link" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+    </div>
+    <form class="contact-form" action="#" method="POST">
+      <div class="form-group"><label class="fr-content"></label><label class="en-content"></label><input type="text" name="name" required></div>
+      <div class="form-group"><label>Email</label><input type="email" name="email" required></div>
+      <div class="form-group">
+        <label class="fr-content"></label>
+        <label class="en-content"></label>
+        <select name="subject" class="fr-content"><option value="general"></option></select>
+        <select name="subject" class="en-content"><option value="general"></option></select>
+      </div>
+      <div class="form-group"><label class="fr-content"></label><label class="en-content"></label><textarea name="message" required></textarea></div>
+      <button type="submit" class="btn-submit"><svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg><span class="fr-content"></span><span class="en-content"></span></button>
+    </form>
+    <div class="card" style="margin-top:20px;text-align:center;">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="card-text fr-content" style="margin-bottom:16px;"></div>
+      <div class="card-text en-content" style="margin-bottom:16px;"></div>
+      <a href="#" target="_blank" rel="noopener" class="btn-submit" style="text-decoration:none;display:inline-flex;"><svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM9 10H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm-8 4H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/></svg><span class="fr-content"></span><span class="en-content"></span></a>
+    </div>
+    <div class="contact-alt">
+      <div class="contact-alt-title fr-content"></div>
+      <div class="contact-alt-title en-content"></div>
+      <div class="contact-alt-text fr-content"></div>
+      <div class="contact-alt-text en-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<div class="tab-panel" id="newsletter">
+  <div class="container">
+    <div class="newsletter-hero">
+      <div class="newsletter-hero-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div>
+      <h2 class="fr-content"></h2>
+      <h2 class="en-content"></h2>
+      <p class="fr-content"></p>
+      <p class="en-content"></p>
+    </div>
+    <div class="newsletter-form-card">
+      <form action="#" method="POST">
+        <div class="form-group"><label class="fr-content"></label><label class="en-content"></label><input type="email" name="email" required></div>
+        <div class="form-group"><label class="fr-content"></label><label class="en-content"></label><select name="preferred_language"><option value="fr">Français</option><option value="en">English</option><option value="both">Les deux / Both</option></select></div>
+        <button type="submit" class="btn-submit" style="width:100%;justify-content:center;"><svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg><span class="fr-content"></span><span class="en-content"></span></button>
+      </form>
+    </div>
+    <div class="newsletter-benefits">
+      <div class="newsletter-benefit">
+        <div class="newsletter-benefit-icon"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div>
+        <div class="newsletter-benefit-title fr-content"></div>
+        <div class="newsletter-benefit-title en-content"></div>
+        <div class="newsletter-benefit-text fr-content"></div>
+        <div class="newsletter-benefit-text en-content"></div>
+      </div>
+      <div class="newsletter-benefit">
+        <div class="newsletter-benefit-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div>
+        <div class="newsletter-benefit-title fr-content"></div>
+        <div class="newsletter-benefit-title en-content"></div>
+        <div class="newsletter-benefit-text fr-content"></div>
+        <div class="newsletter-benefit-text en-content"></div>
+      </div>
+      <div class="newsletter-benefit">
+        <div class="newsletter-benefit-icon"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></div>
+        <div class="newsletter-benefit-title fr-content"></div>
+        <div class="newsletter-benefit-title en-content"></div>
+        <div class="newsletter-benefit-text fr-content"></div>
+        <div class="newsletter-benefit-text en-content"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TÉMOIGNAGES -->
+<div class="tab-panel" id="temoignages">
+  <div class="container">
+    <div class="hero">
+      <h1 class="fr-content"></h1>
+      <h1 class="en-content"></h1>
+      <div class="hero-accent"></div>
+      <p class="fr-content"></p>
+      <p class="en-content"></p>
+    </div>
+    <div class="testimonial-grid">
+      <div class="testimonial-card" style="text-align:center;padding:32px 24px;">
+        <div class="testimonial-text fr-content" style="font-style:normal;color:var(--text-tertiary);"></div>
+        <div class="testimonial-text en-content" style="font-style:normal;color:var(--text-tertiary);"></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:20px;">
+      <div class="card-title fr-content"></div>
+      <div class="card-title en-content"></div>
+      <div class="card-text fr-content"></div>
+      <div class="card-text en-content"></div>
+      <form class="testimonial-form" action="#" method="POST">
+        <div class="form-group"><label class="fr-content"></label><label class="en-content"></label><input type="text" name="name" required></div>
+        <div class="form-group"><label class="fr-content"></label><label class="en-content"></label><textarea name="testimonial" required></textarea></div>
+        <button type="submit" class="btn-submit"><span class="fr-content"></span><span class="en-content"></span></button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- CALENDRIER -->
+<div class="tab-panel" id="calendrier">
+  <div class="container">
+    <div class="hero">
+      <h1 class="fr-content"></h1>
+      <h1 class="en-content"></h1>
+      <div class="hero-accent"></div>
+      <p class="fr-content"></p>
+      <p class="en-content"></p>
+    </div>
+    <div class="event-list">
+      <div class="event-item" style="justify-content:center;text-align:center;padding:32px;">
+        <div class="event-content">
+          <div class="event-title fr-content" style="color:var(--text-tertiary);"></div>
+          <div class="event-title en-content" style="color:var(--text-tertiary);"></div>
+          <div class="event-desc fr-content" style="margin-top:8px;"></div>
+          <div class="event-desc en-content" style="margin-top:8px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PERSONNEL -->
+<div class="tab-panel" id="personnel">
+  <div class="container">
+    <div class="hero">
+      <h1 class="fr-content"></h1>
+      <h1 class="en-content"></h1>
+      <div class="hero-accent"></div>
+      <p class="fr-content"></p>
+      <p class="en-content"></p>
+    </div>
+    <div class="sub-nav-tabs">
+      <button class="sub-tab-btn active" data-subtab="hors-navire" onclick="showSubTab('hors-navire')"><span class="fr-content"></span><span class="en-content"></span></button>
+      <button class="sub-tab-btn" data-subtab="discours-solstice" onclick="showSubTab('discours-solstice')"><span class="fr-content"></span><span class="en-content"></span></button>
+    </div>
+    <div class="sub-tab-panel active" id="hors-navire">
+      <div class="card">
+        <div class="card-title fr-content"></div>
+        <div class="card-title en-content"></div>
+        <div class="card-text fr-content"></div>
+        <div class="card-text en-content"></div>
+      </div>
+      <div class="fr-content">
+        <div class="tome-lang-label"></div>
+        <div class="tome-grid">
+          <div class="tome-card"><div class="tome-title"></div><div class="tome-actions"><a href="#" target="_blank" class="resource-btn"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></a><a href="#" download class="resource-btn"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></a></div></div>
+          <div class="tome-card"><div class="tome-title"></div><div class="tome-actions"><a href="#" target="_blank" class="resource-btn"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></a><a href="#" download class="resource-btn"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></a></div></div>
+          <div class="tome-card"><div class="tome-title"></div><div class="tome-actions"><a href="#" target="_blank" class="resource-btn"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></a><a href="#" download class="resource-btn"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></a></div></div>
+          <div class="tome-card"><div class="tome-title"></div><div class="tome-actions"><a href="#" target="_blank" class="resource-btn"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></a><a href="#" download class="resource-btn"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></a></div></div>
+          <div class="tome-card"><div class="tome-title"></div><div class="tome-actions"><a href="#" target="_blank" class="resource-btn"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></a><a href="#" download class="resource-btn"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></a></div></div>
+        </div>
+      </div>
+      <div class="en-content">
+        <div class="tome-lang-label"></div>
+        <div class="tome-grid">
+          <div class="tome-card"><div class="tome-title"></div><div class="tome-actions"><a href="#" target="_blank" class="resource-btn"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></a><a href="#" download class="resource-btn"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></a></div></div>
+          <div class="tome-card"><div class="tome-title"></div><div class="tome-actions"><a href="#" target="_blank" class="resource-btn"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></a><a href="#" download class="resource-btn"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></a></div></div>
+          <div class="tome-card"><div class="tome-title"></div><div class="tome-actions"><a href="#" target="_blank" class="resource-btn"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></a><a href="#" download class="resource-btn"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></a></div></div>
+          <div class="tome-card"><div class="tome-title"></div><div class="tome-actions"><a href="#" target="_blank" class="resource-btn"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></a><a href="#" download class="resource-btn"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></a></div></div>
+          <div class="tome-card"><div class="tome-title"></div><div class="tome-actions"><a href="#" target="_blank" class="resource-btn"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></a><a href="#" download class="resource-btn"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></a></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="sub-tab-panel" id="discours-solstice">
+      <div class="card">
+        <div class="card-title fr-content"></div>
+        <div class="card-title en-content"></div>
+        <div class="card-text fr-content"></div>
+        <div class="card-text en-content"></div>
+      </div>
+      <div class="fr-content">
+        <div class="tome-lang-label"></div>
+        <div class="tome-card">
+          <div class="tome-title"></div>
+          <div class="tome-actions">
+            <a href="#" target="_blank" class="resource-btn"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></a>
+            <a href="#" download class="resource-btn"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <div class="en-content">
+        <div class="tome-lang-label"></div>
+        <div class="tome-card">
+          <div class="tome-title"></div>
+          <div class="tome-actions">
+            <a href="#" target="_blank" class="resource-btn"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></a>
+            <a href="#" download class="resource-btn"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- COFFRE -->
+<div class="tab-panel" id="coffre">
+  <div class="container">
+    <div class="hero">
+      <h1 class="fr-content">Coffre à outil Nabek</h1>
+      <h1 class="en-content">Nabek Tool Chest</h1>
+      <div class="hero-accent"></div>
+      <p class="fr-content">Outil de recherche — Greffons site web Projet Nabek</p>
+      <p class="en-content">Search tool — Nabek Project web plugin</p>
+    </div>
+    <div class="card">
+      <div class="card-title fr-content">Outil de recherche</div>
+      <div class="card-title en-content">Search tool</div>
+      <div class="card-text fr-content">
+        <p>Cet espace est réservé aux outils de recherche du Coffre à outil Nabek.</p>
+        <p>Contenu en cours de développement.</p>
+      </div>
+      <div class="card-text en-content">
+        <p>This space is reserved for the Nabek Tool Chest search tools.</p>
+        <p>Content under development.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p class="fr-content"></p>
+    <p class="en-content"></p>
+  </div>
+</footer>
+
+<script>
+// ============================================================
+// LANGUAGE SYSTEM
+// ============================================================
+function setLanguage(lang) {
+  document.body.classList.remove('lang-fr', 'lang-en');
+  document.body.classList.add('lang-' + lang);
+  document.documentElement.lang = lang === 'fr' ? 'fr' : 'en';
+  localStorage.setItem('nabek-lang', lang);
+  document.getElementById('langOverlay').style.display = 'none';
+}
+
+function toggleLanguage() {
+  const current = document.body.classList.contains('lang-en') ? 'en' : 'fr';
+  const next = current === 'fr' ? 'en' : 'fr';
+  setLanguage(next);
+}
+
+// Check saved language on load
+(function() {
+  const saved = localStorage.getItem('nabek-lang');
+  if (saved) {
+    document.body.classList.remove('lang-fr', 'lang-en');
+    document.body.classList.add('lang-' + saved);
+    document.documentElement.lang = saved === 'fr' ? 'fr' : 'en';
+    document.getElementById('langOverlay').style.display = 'none';
+  }
+})();
+
+// ============================================================
+// TAB SYSTEM
+// ============================================================
+function showTab(tabId) {
+  // Hide all panels
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  // Show target panel
+  const target = document.getElementById(tabId);
+  if (target) target.classList.add('active');
+  // Update nav buttons
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.tab === tabId);
+  });
+  // Scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Save active tab
+  localStorage.setItem('nabek-tab', tabId);
+}
+
+// Restore active tab on load
+(function() {
+  const savedTab = localStorage.getItem('nabek-tab');
+  if (savedTab && document.getElementById(savedTab)) {
+    showTab(savedTab);
+  }
+})();
+
+// Initialize links filter on page load
+(function() {
+  if (document.getElementById('linkSearch')) {
+    filterLinks();
+  }
+})();
+
+// ============================================================
+// THEME TOGGLE
+// ============================================================
+function toggleTheme() {
+  document.body.classList.toggle('dark');
+  const isDark = document.body.classList.contains('dark');
+  localStorage.setItem('nabek-theme', isDark ? 'dark' : 'light');
+}
+
+// Restore theme on load
+(function() {
+  const savedTheme = localStorage.getItem('nabek-theme');
+  if (savedTheme === 'dark') {
+    document.body.classList.add('dark');
+  }
+})();
+
+// ============================================================
+// SEARCH / FILTER LINKS
+// ============================================================
+function filterLinks() {
+  const query = document.getElementById('linkSearch').value.toLowerCase();
+  const rows = document.querySelectorAll('#linkList .link-row');
+  let visible = 0;
+  rows.forEach(row => {
+    const text = row.textContent.toLowerCase();
+    const match = text.includes(query);
+    row.style.display = match ? 'flex' : 'none';
+    if (match) visible++;
+  });
+  document.getElementById('noLinks').style.display = visible === 0 ? 'block' : 'none';
+}
+
+// ============================================================
+// CONTACT FORM — CONNECTÉ À FORMSPREE
+// ============================================================
+// Les formulaires utilisent action="https://formspree.io/f/ID"
+// Crée un compte gratuit sur https://formspree.io/
+
+
+
+
+
+// ============================================================
+// SUB-TAB SYSTEM (Personnel)
+// ============================================================
+function showSubTab(subTabId) {
+  const activeTab = document.querySelector('.tab-panel.active');
+  if (!activeTab) return;
+  activeTab.querySelectorAll('.sub-tab-panel').forEach(p => p.classList.remove('active'));
+  const target = activeTab.querySelector('#' + subTabId);
+  if (target) target.classList.add('active');
+  activeTab.querySelectorAll('.sub-tab-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.subtab === subTabId);
+  });
+}
+// ============================================================
+// KEYBOARD NAVIGATION
+// ============================================================
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    const overlay = document.getElementById('langOverlay');
+    if (overlay && overlay.style.display !== 'none') {
+      // Default to French if they press Escape
+      setLanguage('fr');
+    }
+  }
+});
+</script>
+
+<!-- Crisp Chat -->
+<script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="e2f9a35a-94ce-4c99-be58-47f6ea10000f";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
+</body>
+</html>
